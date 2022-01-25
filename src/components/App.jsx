@@ -1,7 +1,3 @@
-/* export const App = () => {
-  return <>React homework template</>;
-}; */
-
 import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Searchbar } from './Searchbar/Searchbar';
