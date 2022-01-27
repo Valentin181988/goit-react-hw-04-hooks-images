@@ -22,60 +22,29 @@ export const ImageGallery = ({pictureName}) => {
     const [modalPicture, setModalPicture] = useState(null);
 
     useEffect(() => {  
-         
+
         if (pictureName) {
             setStatus('pending');
             GalleryApi(pictureName, page)
             .then(pictures  => {
                 console.log(pictures);
-                setPictures(pictures);
+                
+                setPictures(pictures)
                 setStatus('resolved');
             })
             .catch(error => {
                 setError(error)
                 setStatus('rejected')
             })
+            console.log(page)
         }
         return;
 
     }, [pictureName, page]);
-    
-    /* componentDidUpdate(prevProps, prevState) {
-        const prevName = prevProps.pictureName;
-        const nextName = this.props.pictureName;
-
-        if (prevName !== nextName) {
-
-            this.setState({status: 'pending',});
-
-            GalleryApi(nextName, this.state.page)
-            .then(pictures  => {
-                console.log(pictures)
-                this.setState({ pictures, status: 'resolved' })})
-            .catch(error => this.setState({ error, status: 'rejected' }))
-        };    
-    }; */
 
     const onLoadMore = () => {
         setStatus('pending');
         setPage(page + 1);
-
-        console.log(page)
-
-            GalleryApi(pictureName, page + 1)
-            .then(nextPictures  => {
-                
-                const pictures = pictures.concat(nextPictures);
-
-                console.log(pictures);
-
-                setPictures(pictures);
-                setStatus('resolved');
-            })
-            .catch(error => {
-                setError(error);
-                setStatus('rejected');
-                });
     };
 
     const toggleModal = (picture) => {
@@ -84,7 +53,6 @@ export const ImageGallery = ({pictureName}) => {
       };
 
     
-     
         if(status === 'Idle') {
             return <ImageGalleryText>Please enter a keyword to search a pictures</ImageGalleryText>
         };
