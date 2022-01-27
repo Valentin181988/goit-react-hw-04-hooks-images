@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import  { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 
 import { Loader } from '../Loader/Loader';
@@ -12,17 +12,35 @@ import { ImageGalleryWrapper,
          ImageGalleryText } from './ImageGallery.styled';
 
 
-export class ImageGallery extends Component {
-    state = {
-       pictures: null,
-       error: null,
-       page: 1,
-       showModal: false,
-       status: 'Idle',
-       modalPicture: null
-    };
+export const ImageGallery = ({pictureName}) => {
 
-    componentDidUpdate(prevProps, prevState) {
+    const [pictures, setPictures] = useState(null);
+    const [error, setError] = useState(null);
+    const [page, setPage] = useState(1);
+    const [showModal, setShowModal] = useState(false);
+    const [status, setStatus] = useState('Idle');
+    const [modalPicture, setModalPicture] = useState(null);
+
+    useEffect(() => {  
+         
+        if (pictureName) {
+            setStatus('pending');
+            GalleryApi(pictureName, page)
+            .then(pictures  => {
+                console.log(pictures);
+                setPictures(pictures);
+                setStatus('resolved');
+            })
+            .catch(error => {
+                setError(error)
+                setStatus('rejected')
+            })
+        }
+        return;
+
+    }, [pictureName, page]);
+    
+    /* componentDidUpdate(prevProps, prevState) {
         const prevName = prevProps.pictureName;
         const nextName = this.props.pictureName;
 
@@ -36,32 +54,36 @@ export class ImageGallery extends Component {
                 this.setState({ pictures, status: 'resolved' })})
             .catch(error => this.setState({ error, status: 'rejected' }))
         };    
-    };
+    }; */
 
-    onLoadMore = () => {
-        this.setState({status: 'pending',});
-        this.setState({page: this.state.page + 1});
+    const onLoadMore = () => {
+        setStatus('pending');
+        setPage(page + 1);
 
-        console.log(this.state.page)
+        console.log(page)
 
-        const nextName = this.props.pictureName;
-
-            GalleryApi(nextName, this.state.page + 1)
+            GalleryApi(pictureName, page + 1)
             .then(nextPictures  => {
                 
-                const pictures = this.state.pictures.concat(nextPictures)
+                const pictures = pictures.concat(nextPictures);
 
-                console.log(pictures)
-                this.setState({ pictures, status: 'resolved' })})
-            .catch(error => this.setState({ error, status: 'rejected' }))
+                console.log(pictures);
+
+                setPictures(pictures);
+                setStatus('resolved');
+            })
+            .catch(error => {
+                setError(error);
+                setStatus('rejected');
+                });
     };
 
-    toggleModal = (picture) => {
-        this.setState(state => ({ showModal: !state.showModal, modalPicture: picture }));
+    const toggleModal = (picture) => {
+        setShowModal(!showModal);
+        setModalPicture(picture);
       };
 
-    render() {
-        const { pictures, error, status, showModal, modalPicture } = this.state;
+    
      
         if(status === 'Idle') {
             return <ImageGalleryText>Please enter a keyword to search a pictures</ImageGalleryText>
@@ -79,20 +101,19 @@ export class ImageGallery extends Component {
             return(
                 <>
                     <ImageGalleryWrapper>
-                        <ImageGalleryItem pictures={pictures} onClick={this.toggleModal}/>
+                        <ImageGalleryItem pictures={pictures} onClick={toggleModal}/>
                     </ImageGalleryWrapper>
 
-                    <LoadBtn onClick={this.onLoadMore}/>
+                    <LoadBtn onClick={onLoadMore}/>
                     
                     {showModal && (
-                        <Modal onClose={this.toggleModal}>
+                        <Modal onClose={toggleModal}>
                             <img src={modalPicture.largeImageURL} alt={modalPicture.tag} />
                         </Modal>
                     )}
                 </>
             );
         }  
-    };
 };
 
 ImageGallery.propTypes = {
