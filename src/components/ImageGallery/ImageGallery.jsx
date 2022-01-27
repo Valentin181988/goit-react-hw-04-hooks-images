@@ -14,7 +14,7 @@ import { ImageGalleryWrapper,
 
 export const ImageGallery = ({pictureName}) => {
 
-    const [pictures, setPictures] = useState(null);
+    const [pictures, setPictures] = useState([]);
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
     const [showModal, setShowModal] = useState(false);
@@ -26,11 +26,12 @@ export const ImageGallery = ({pictureName}) => {
         if (pictureName) {
             setStatus('pending');
             GalleryApi(pictureName, page)
-            .then(pictures  => {
-                console.log(pictures);
+            .then(newPictures  => {
+                console.log(newPictures);
                 
-                setPictures(pictures)
+                setPictures(pictures.concat(newPictures))
                 setStatus('resolved');
+                console.log(pictures)
             })
             .catch(error => {
                 setError(error)
