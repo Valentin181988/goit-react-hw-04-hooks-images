@@ -10,11 +10,11 @@ export const App = () => {
   const handleFormSubmit = pictureName => {
     setPictureName(pictureName)
   };
-
+    
     return (
       <div>        
         <Searchbar onSubmit={handleFormSubmit}/>
-        <ImageGallery pictureName={pictureName}/>
+        <ImageGallery pictureName={pictureName} />
         <Toaster />
       </div>
     );

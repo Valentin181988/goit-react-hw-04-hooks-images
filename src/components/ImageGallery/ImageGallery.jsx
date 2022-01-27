@@ -20,18 +20,23 @@ export const ImageGallery = ({pictureName}) => {
     const [showModal, setShowModal] = useState(false);
     const [status, setStatus] = useState('Idle');
     const [modalPicture, setModalPicture] = useState(null);
+    const [imageName, setImageName] = useState(null);
 
-    useEffect(() => {  
+    useEffect(() => {
 
         if (pictureName) {
             setStatus('pending');
+
+            setImageName(pictureName);
+
+            if (pictureName !== imageName) {
+                setPage(1)
+            };
+
             GalleryApi(pictureName, page)
-            .then(newPictures  => {
-                console.log(newPictures);
-                
-                setPictures(pictures.concat(newPictures))
+            .then(newPictures  => {                
+                setPictures(prState => page > 1 ? prState.concat(newPictures) : newPictures);
                 setStatus('resolved');
-                console.log(pictures)
             })
             .catch(error => {
                 setError(error)
@@ -52,7 +57,6 @@ export const ImageGallery = ({pictureName}) => {
         setShowModal(!showModal);
         setModalPicture(picture);
       };
-
     
         if(status === 'Idle') {
             return <ImageGalleryText>Please enter a keyword to search a pictures</ImageGalleryText>
