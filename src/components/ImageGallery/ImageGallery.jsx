@@ -38,7 +38,7 @@ export const ImageGallery = ({newPictureName}) => {
 
         setStatus('pending');
 
-        console.log('page', page);
+        /* console.log('page', page); */
 
         GalleryApi(newPictureName, page)
         .then(newPictures  => {                
