@@ -46,8 +46,9 @@ export const ImageGallery = ({newPictureName}) => {
             setStatus('resolved');
             })
         .catch(error => {
-            setError(error)
-            setStatus('rejected')
+            setError(error);
+            setStatus('rejected');
+            setPage(null);
             })
        
         return;
