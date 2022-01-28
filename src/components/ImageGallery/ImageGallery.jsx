@@ -12,41 +12,48 @@ import { ImageGalleryWrapper,
          ImageGalleryText } from './ImageGallery.styled';
 
 
-export const ImageGallery = ({pictureName}) => {
+export const ImageGallery = ({newPictureName}) => {
 
     const [pictures, setPictures] = useState([]);
     const [error, setError] = useState(null);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [status, setStatus] = useState('Idle');
     const [modalPicture, setModalPicture] = useState(null);
-    const [imageName, setImageName] = useState(null);
+
+    useEffect(() => {
+        if (!newPictureName) {
+            return;
+        };
+
+       setPage(1);
+    
+    }, [newPictureName]);
 
     useEffect(() => {
 
-        if (pictureName) {
-            setStatus('pending');
+        if (!newPictureName) {
+            return;
+        };
 
-            setImageName(pictureName);
+        setStatus('pending');
 
-            if (pictureName !== imageName) {
-                setPage(1)
-            };
+        console.log('page', page);
 
-            GalleryApi(pictureName, page)
-            .then(newPictures  => {                
-                setPictures(prState => page > 1 ? prState.concat(newPictures) : newPictures);
-                setStatus('resolved');
+        GalleryApi(newPictureName, page)
+        .then(newPictures  => {                
+            setPictures(prState => page> 1 ? prState.concat(newPictures) : newPictures);
+            setStatus('resolved');
             })
-            .catch(error => {
-                setError(error)
-                setStatus('rejected')
+        .catch(error => {
+            setError(error)
+            setStatus('rejected')
             })
-            console.log(page)
-        }
+       
         return;
 
-    }, [pictureName, page]);
+    }, [page]);
+
 
     const onLoadMore = () => {
         setStatus('pending');

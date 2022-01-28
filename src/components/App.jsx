@@ -14,7 +14,7 @@ export const App = () => {
     return (
       <div>        
         <Searchbar onSubmit={handleFormSubmit}/>
-        <ImageGallery pictureName={pictureName} />
+        <ImageGallery newPictureName={pictureName} />
         <Toaster />
       </div>
     );
