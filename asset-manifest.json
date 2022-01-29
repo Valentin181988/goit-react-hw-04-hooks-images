@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/react-homework-template/static/css/main.c988b17a.css",
-    "main.js": "/react-homework-template/static/js/main.75725dc4.js",
-    "static/js/787.a6d51bb8.chunk.js": "/react-homework-template/static/js/787.a6d51bb8.chunk.js",
-    "index.html": "/react-homework-template/index.html",
-    "main.c988b17a.css.map": "/react-homework-template/static/css/main.c988b17a.css.map",
-    "main.75725dc4.js.map": "/react-homework-template/static/js/main.75725dc4.js.map",
-    "787.a6d51bb8.chunk.js.map": "/react-homework-template/static/js/787.a6d51bb8.chunk.js.map"
+    "main.css": "/goit-react-hw-04-hooks-images/static/css/main.c988b17a.css",
+    "main.js": "/goit-react-hw-04-hooks-images/static/js/main.39827809.js",
+    "static/js/787.a6d51bb8.chunk.js": "/goit-react-hw-04-hooks-images/static/js/787.a6d51bb8.chunk.js",
+    "index.html": "/goit-react-hw-04-hooks-images/index.html",
+    "main.c988b17a.css.map": "/goit-react-hw-04-hooks-images/static/css/main.c988b17a.css.map",
+    "main.39827809.js.map": "/goit-react-hw-04-hooks-images/static/js/main.39827809.js.map",
+    "787.a6d51bb8.chunk.js.map": "/goit-react-hw-04-hooks-images/static/js/787.a6d51bb8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c988b17a.css",
-    "static/js/main.75725dc4.js"
+    "static/js/main.39827809.js"
   ]
 }
